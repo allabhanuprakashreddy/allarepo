@@ -1,0 +1,83 @@
+azs:
+- name: z1
+  cloud_properties:
+    availability_zone: "1"
+- name: z2
+  cloud_properties:
+    availability_zone: "2"
+- name: z3
+  cloud_properties:
+    availability_zone: "3"
+compilation:
+  az: z1
+  network: default
+  reuse_compilation_vms: true
+  vm_type: minimal
+  workers: 6
+disk_types:
+- disk_size: 1024
+  name: 1GB
+- disk_size: 5120
+  name: 5GB
+- disk_size: 10240
+  name: 10GB
+- disk_size: 100240
+  name: 100GB
+# Note: the "default" disk type is not used in cf-deployment.
+# it is included for compatibility with the bosh-deployment
+# cloud-config.
+- disk_size: 1024
+  name: default
+networks:
+- name: default
+  type: manual
+  subnets:
+  - azs: [z1, z2, z3]
+    cloud_properties:
+      name: random
+      virtual_network_name: boshnet
+      subnet_name: bosh
+      security_group: nsg-bosh
+    gateway : 10.244.0.1
+    range: 10.244.0.7/20
+    reserved:
+     - 10.244.0.1
+     - 10.244.0.2
+     - 10.244.0.4
+     - 10.244.0.3
+    static:
+    - 10.244.0.7 - 10.244.0.127
+    - 10.244.1.0 - 10.244.1.127
+    - 10.244.2.0 - 10.244.2.127
+    - 10.244.3.0 - 10.244.3.127
+vm_extensions:
+- name: 5GB_ephemeral_disk
+- name: 10GB_ephemeral_disk
+- name: 50GB_ephemeral_disk
+- name: 100GB_ephemeral_disk
+- name: 500GB_ephemeral_disk
+- name: 1TB_ephemeral_disk
+- name: ssh-proxy-and-router-lb
+  cloud_properties:
+    ports:
+    - host: 80
+    - host: 443
+    - host: 2222
+- name: cf-tcp-router-network-properties
+  cloud_properties:
+    ports:
+    - host: 1024-1123
+
+vm_types:
+- name: minimal
+  cloud_properties:
+    instance_type: Standard_B1s
+- name: small
+  cloud_properties:
+    instance_type: Standard_B1ms
+- name: small-highmem
+  cloud_properties:
+    instance_type: Standard_D3_v2
+- name: default
+  cloud_properties:
+    instance_type: Standard_B1ms
