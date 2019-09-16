@@ -72,12 +72,16 @@ vm_types:
 - name: minimal
   cloud_properties:
     instance_type: Standard_B1s
+    use_managed_disks: true
 - name: small
   cloud_properties:
     instance_type: Standard_B1ms
+	use_managed_disks: true
 - name: small-highmem
   cloud_properties:
-    instance_type: Standard_D3_v2
+    instance_type: Standard_B2ms
+	use_managed_disks: true
 - name: default
   cloud_properties:
     instance_type: Standard_B1ms
+	use_managed_disks: true
