@@ -1,13 +1,7 @@
 azs:
 - name: z1
-  cloud_properties:
-    availability_zone: "1"
 - name: z2
-  cloud_properties:
-    availability_zone: "2"
 - name: z3
-  cloud_properties:
-    availability_zone: "3"
 compilation:
   az: z1
   network: default
@@ -68,6 +62,9 @@ vm_extensions:
   cloud_properties:
     ports:
     - host: 1024-1123
+- name: availability-set-properties
+  cloud_properties:
+    availability_set: hcmtest
 
 vm_types:
 - name: minimal
