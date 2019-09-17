@@ -59,6 +59,7 @@ vm_extensions:
 - name: 1TB_ephemeral_disk
 - name: ssh-proxy-and-router-lb
   cloud_properties:
+    use_managed_disks: true
     ports:
     - host: 80
     - host: 443
